@@ -53,7 +53,7 @@ abstract class NoteRoomDatabase : RoomDatabase() {
                 }
             }
         }
-
+        //redundant comment GitTest
         suspend fun populateDatabase(noteDao: NoteDao) {
             // Deletes all content
             noteDao.deleteAll()
