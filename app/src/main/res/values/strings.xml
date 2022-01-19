@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NotesForYou</string>
+    <string name="hint_note">Note...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="add_note">Add note</string>
 </resources>
