@@ -10,21 +10,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// Annotates class to be a Room Database with a table (entity) of the Word class
+
 @Database(entities = arrayOf(Note::class), version = 1, exportSchema = false)
 abstract class NoteRoomDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
 
     companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
         @Volatile
         private var INSTANCE: NoteRoomDatabase? = null
 
         fun getDatabase(context: Context, scope: CoroutineScope): NoteRoomDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
@@ -34,7 +30,6 @@ abstract class NoteRoomDatabase : RoomDatabase() {
                 .addCallback(NoteDatabaseCallback(scope))
                 .build()
                 INSTANCE = instance
-                // return instance
                 instance
             }
         }
@@ -44,8 +39,6 @@ abstract class NoteRoomDatabase : RoomDatabase() {
 
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                // If you want to keep the data through app restarts,
-                // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         populateDatabase(database.noteDao())

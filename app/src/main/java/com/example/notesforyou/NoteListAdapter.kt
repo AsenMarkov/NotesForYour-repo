@@ -17,9 +17,10 @@ class NoteListAdapter: ListAdapter<Note, NoteViewHolder>(NOTES_COMPARATOR) {
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val current = getItem(position)
+
         holder.textViewTitle.text = current.title
         holder.textViewDescription.text = current.description
-        holder.textViewPriority.setText(current.priority)
+
     }
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

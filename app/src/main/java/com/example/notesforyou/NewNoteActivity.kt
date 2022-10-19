@@ -1,5 +1,6 @@
 package com.example.notesforyou
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,27 +12,23 @@ import android.widget.NumberPicker
 
 class NewNoteActivity : AppCompatActivity() {
 
-    private lateinit var editTitleView: EditText
-    private lateinit var editDescriptionView: EditText
-    private lateinit var numberPickerPrio: NumberPicker
-
+    @SuppressLint("WrongViewCast")
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
 
-        editTitleView = findViewById(R.id.text_view_title)
-        editDescriptionView = findViewById(R.id.text_view_description)
-        numberPickerPrio = findViewById(R.id.number_picker_priority)
+        val editTitleView = findViewById<EditText>(R.id.text_view_title)
+        val editDescriptionView = findViewById<EditText>(R.id.text_view_description)
+        val numberPickerPrio = findViewById<NumberPicker>(R.id.number_picker_priority)
 
         numberPickerPrio.minValue = 1
         numberPickerPrio.maxValue = 10
 
         val button = findViewById<Button>(R.id.button_save)
-
         button.setOnClickListener {
             val replyIntent = Intent()
 
-            if (TextUtils.isEmpty(editTitleView.text) || TextUtils.isEmpty(editDescriptionView.text)) {
+            if (TextUtils.isEmpty(editTitleView.text) && TextUtils.isEmpty(editDescriptionView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val title = editTitleView.text.toString()
